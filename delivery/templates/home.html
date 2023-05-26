@@ -1,0 +1,33 @@
+{% extends 'base_layout.html' %}
+{% load category %}
+
+{% load static %}
+
+{% block content %}
+
+
+    <div class="section">
+{% categories %}
+
+        <div class="columns p-6" style="display: flex; flex-wrap: wrap">
+            {% for food in establishments %}
+                <div class="column is-4">
+                    <a href="{% url 'delivery:detail_establishment' food.pk %}">
+                        <div class="card " style="min-height: 350px;border-radius: 25px;">
+                                <img src="{{ food.photo.url }}" alt="" style="min-height: 200px;border-top-left-radius: 25px;border-top-right-radius: 25px;height: 250px;width: 100%; ">
+                            <div class="title mt-2 is-fixed is-4 has-text-centered has-family-sans-serif">
+                                {{ food.name }}
+                            </div>
+                            <div class="subtitle is-6 mt-3 ml-3">{{ food.type.name }}</div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <li>
+
+        </li>
+    </div>
+
+
+{% endblock %}

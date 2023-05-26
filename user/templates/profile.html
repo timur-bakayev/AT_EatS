@@ -1,0 +1,56 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+    <style>
+        .hero {
+            background: url('https://avatars.mds.yandex.net/get-altay/2960979/2a0000017260a9d9f85eb44d3ab634dd7d7f/XXL_height') center/cover;
+        }
+    </style>
+    <div class="hero is-fullheight">
+        <div class="columns is-centered">
+            <div class="column is-6 mt-4">
+                <div class="box has-text-centered title">
+                    <h1>Имя пользователя: {{ a.user }}</h1>
+                    <h1>Номер телефона: {{ a.phone }}</h1>
+                    <h1>Адрес: {{ a.address }}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="card p-5">
+                <div class="content">
+                        <div class="title has-text-centered">My recent orders</div>
+                        <table class="table has-text-centered">
+                            <thead>
+                            <tr>
+                                <th>Номер заказа</th>
+                                <th>Еда</th>
+                                <th>Общая сумма</th>
+                                <th>Статус заказа</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>{{ order }}</td>
+                                    <td>
+                                        {% for order_food in order.order_foods.all %}
+                                            <a href="{% url 'delivery:detail_food' order_food.food.pk %}">
+                                                {{ order_food }}
+                                            </a>
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{ order.total_price }} sum</td>
+                                    {% if order.readiness == True %}
+                                        <td>Завершен</td>
+                                    {% else %}
+                                        <td>В процессе</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

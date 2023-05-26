@@ -1,0 +1,11 @@
+<section class="section">
+    <div class="columns">
+    {% for category in categories %}
+            <div class="column">
+                <a class="box button is-outlined is-success" href="{% url 'delivery:home' %}?category={{ category.pk }}">
+                     {{ category }}
+                </a>
+            </div>
+        {% endfor %}
+</div>
+</section>

@@ -1,0 +1,37 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+{% block content %}
+<div class="section product-detail">
+    <div class="columns is-flex is-align-items-center">
+        <div class="column">
+            <div class="box">
+                <figure class="image product-detail-image">
+                    <img src="{{ food.photo.url }}" alt="Placeholder image">
+                </figure>
+            </div>
+        </div>
+        <div class="column">
+            <div class="content">
+                <p class="title is-size-2">
+                    {{ food.name }}
+                </p>
+                <p class="title has-text-grey-light is-size-4">{{ food.bio }}</p>
+                <p class="title is-size-3 has-text-info">{{ food.price }} сум</p>
+                {% if request.user.usertype.establishment == False %}
+                <div class="has-text-right">
+                    <a class="m-4"
+                        href="{% url 'delivery:detail_establishment' food.establishment.pk %}?food={{ food.id }}">
+                        <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+                        <lord-icon src="https://cdn.lordicon.com/hyhnpiza.json" trigger="loop" delay="1500"
+                            colors="primary:#121331" state="intro" style="width:45px;height:45px">
+                        </lord-icon>
+                    </a>
+                </div>
+                {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

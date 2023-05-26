@@ -1,0 +1,125 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'bulma.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+<script src="{% static 'icons.js' %}"></script>
+
+</head>
+<body>
+
+<nav class="navbar is-fixed-top  " role="navigation" aria-label="main navigation">
+    <div class="navbar-brand ">
+        <a class="navbar-item mb-2" href="{% url 'delivery:home' %}">
+            <img src="{% static 'img/logo.png' %}" width="200" height="60">
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbarBasicExample " class="navbar-menu">
+        <div class="navbar-start">
+            <div class="navbar-item">
+
+            </div>
+            <div class="navbar-item ml-1 ">
+                <div class="columns">
+                    <div class="column  mr-6">
+                        <form action="{% url 'delivery:home' %}" method="get">
+                            <div class="field has-addons mt-4 mr-2">
+                                <div class="control">
+                                    <input class="input " type="search" placeholder="Найти блюдо , кухню , заведение"
+                                           name="search">
+                                </div>
+                                <div class="control">
+                                    <button class="button  " type="submit">
+                                        <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+                                        <lord-icon
+                                                src="https://cdn.lordicon.com/xfftupfv.json"
+                                                trigger="hover"
+                                                colors="primary:#121331"
+                                                style="width:25px;height:25px">
+                                        </lord-icon>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-end">
+
+            <div class="navbar-item">
+                {% if request.user.usertype.establishment == True %}
+                    <a href="{% url 'delivery:establishment_orders' %}" class="button is-primary mr-3">
+                        Заказы
+                    </a>
+
+                    <a href="{% url 'delivery:detail_establishment' request.user.establishments.pk %} "
+                       class="button is-warning mr-3">
+                        Мое заведение
+                    </a>
+                {% else %}
+                    <a class="button is-link mr-3" href="{% url 'delivery:cart' %}">
+                        Корзина
+                    </a>
+                    <a class="button is-warning mr-4" href="{% url 'users:profile' %}">
+                        Мой профиль
+                    </a>
+
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <div class="buttons is-warning">
+                        <a href="{% url 'users:sign_out' %} ">
+                            <button class="button is-danger">
+                                <strong>Выход</strong>
+                            </button>
+
+                        </a>
+
+                    </div>
+                {% else %}
+                    <div class="buttons">
+
+                        <a class="button is-primary" href="{% url 'users:sign_up' %}">
+                            <strong>Регистрация</strong>
+                        </a>
+                        <a class="button is-light" href="{% url 'users:sign_in' %}">
+                            Вход
+                        </a>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+    <br>
+</nav>
+
+<div style="margin-top:80px ">
+
+    {% block content %}
+
+    {% endblock %}
+</div>
+
+
+<div class="section" style="background: rgb(8, 245, 249)
+;">
+    <div class="subtitle is-5 has-text-weight-bold">Co-founders Саидов Арслан , Бакаев Тимур и Фаткулин Руслан</div>
+</div>
+
+<script src="{% static 'icons.js' %}"></script>
+</body>
+</html>

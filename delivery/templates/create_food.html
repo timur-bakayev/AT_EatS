@@ -1,0 +1,58 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+     <link rel="stylesheet" href="{% static 'bulma.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<style>
+    .hero {
+        background: url('https://avatars.mds.yandex.net/get-altay/2960979/2a0000017260a9d9f85eb44d3ab634dd7d7f/XXL_height') center/cover;
+
+    }
+</style>
+<div class="hero is-fullheight">
+    <section class="section">
+        <div class="columns">
+            <div class="column is-3"></div>
+            <div class="column">
+                <div class="box">
+                    <h1 class="title has-text-centered"> Добавить в блюдо</h1>
+                    <form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+                    {% for a in form %}
+                        <div class="field">
+                            <label for="{{ a.id_for_label }}" class="label">{{ a.label }}</label>
+                            {{ a }}
+
+                        </div>
+                    {% endfor %}
+    <button class="button is-success" type="submit">Добавить в меню</button>
+</form>
+
+                </div>
+            </div>
+            <div class="column is-3"></div>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+{#<form method="post" action="" enctype="multipart/form-data">#}
+{#    {% csrf_token %}#}
+{#    {{ form }}#}
+{#    <button type="submit">Добавить в меню</button>#}
+{#</form>#}

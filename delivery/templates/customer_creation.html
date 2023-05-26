@@ -1,0 +1,56 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'bulma.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Создание пользователя</title>
+</head>
+<body>
+    <style>
+        .hero {
+            background: url('https://avatars.mds.yandex.net/get-altay/2960979/2a0000017260a9d9f85eb44d3ab634dd7d7f/XXL_height') center/cover;
+    
+        }
+    </style>
+<div class="hero is-fullheight">
+    <div class="columns">
+        <div class="column is-4"></div>
+        <div class="column is-4">
+            <div class="box">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {% for a in form %}
+                    <label for="{{ a.id_for_label }}" class="label">{{ a.label }}</label>
+                        {{a}}
+                        
+                    
+                    {% endfor %}
+                    {{locationform}}
+                    
+                    <button class="button  mt-6" type="submit" style="margin-left: 150px;">Подтвердить</button>
+                </form>
+            </div>
+
+        </div>
+        <div class="column"></div>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+
+
+{##}
+{#<form action="" method="post">#}
+{#        {% csrf_token %}#}
+{#        {{ form }}#}
+{#        {{ locationform }}#}
+{#        <button type="submit">Go</button>#}
+{#    </form>#}

@@ -1,0 +1,82 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="hero is-fullheight">
+        <div class="columns">
+            <div class="column is-3"></div>
+            <div class="column is-6">
+                <img src="{{ establishment.logo.url }}" alt="" style="width: 100%;height:300px ">
+                <h1 class="title has-text-centered mt-4 ">{{ establishment.name }}</h1>
+                <h1 class="subtitle has-text-centered mt-4">{{ establishment.bio }}</h1>
+                <h1 class="subtitle has-text-centered">{{ establishment.phone }}</h1>
+                <h1 class="subtitle has-text-centered">
+                    {{ establishment.address }}
+                </h1>
+                <div class="columns">
+                    <div class="column is-4 mr-4"></div>
+                    <div class="column">
+                        {% if request.user.usertype.establishment == True and request.user == establishment.user%}
+                            <a href="{% url 'delivery:create_food' %}  " class="button is-link">
+                                Добавить блюдо
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="section">
+        {% for category in categories %}
+            {% if category.food_set.all %}
+                <h1 class="title is-3 ">{{ category.name }}</h1>
+                <div class="columns is-multiline">
+                {% for food in category.food_set.all %}
+                    {% if food in foods %}
+                        <div class="column has-text-centered is-3 mt-6">
+                            <a href="{% url 'delivery:detail_food' food.pk %}">
+                                <div class="card" style="min-height: 300px;border-radius: 25px;">
+                                    <div class="card-image" style="min-height:220px">
+                                        <img src=" {{ food.photo.url }}" alt="" style="width:100%; height: 200px;border-top-left-radius:25px;border-top-right-radius:25px">
+
+                                    </div>
+                                    <h6 class="has-text-centered">{{ food.name }}</h6>
+                                    {% if request.user.usertype.establishment == False %}
+                                        <div class="has-text-right">
+                                            <a class="m-4"
+                                                    href="{% url 'delivery:detail_establishment' food.establishment.pk %}?food={{ food.id }}">
+                                                <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+                                                <lord-icon
+                                                        src="https://cdn.lordicon.com/hyhnpiza.json"
+                                                        trigger="loop"
+                                                        delay="1500"
+                                                        colors="primary:#121331"
+                                                        state="intro"
+                                                        style="width:45px;height:45px">
+                                                </lord-icon>
+                                            </a>
+                                        </div>
+                                    {% elif request.user.usertype.establishment == True and request.user == food.establishment.user %}
+                                        <a href="{% url 'delivery:edit_food' food.pk %}"
+                                           class="button is-link mt-1">Редактировать</a>
+                                        <a href="{% url 'delivery:delete_food' food.pk %}"
+                                           class="button is-danger mt-1">Удалить</a>
+                                    {% endif %}
+                                </div>
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        {% endfor %}
+
+
+    </section>
+
+{% endblock %}
+
+
+

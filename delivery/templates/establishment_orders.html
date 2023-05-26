@@ -1,0 +1,73 @@
+{#{% extends 'base_layout.html' %}#}
+{#{% block content %}#}
+{#    {% for order in orders %}#}
+{#        <tr>#}
+{#            <td>{{ order }}</td>#}
+{#            <td>#}
+{#                {% for order_food in order.order_foods.all %}#}
+{#                    <a href="{% url 'delivery:detail_food' order_food.food.pk %}">#}
+{#                        {{ order_food }}#}
+{#                    </a>#}
+{#                {% endfor %}#}
+{#            </td>#}
+{#            <td>{{ order.total_price }} sum</td>#}
+{#            <td>In consideration</td>#}
+{#            <td>Not paid</td>#}
+{#        </tr>#}
+{#    {% endfor %}#}
+{#{% endblock %}#}
+
+<div class="section">
+    {% extends 'base_layout.html' %}
+    {% block content %}
+    <div class="columns">
+        <div class="column has-text-centered">
+            <div class="title is-2 has-text-centered">
+                В процессе
+            </div>
+            {% for order in orders %}
+
+                {% if order.readiness == False %}
+                <ul>
+                    <ol>{{ order }}</ol>
+                    <ul>
+                        {% for order_food in order.order_foods.all %}
+                            <a href="{% url 'delivery:detail_food' order_food.food.pk %}">
+                                {{ order_food }}
+                            </a>
+                        {% endfor %}
+                    </ul>
+                    <ol><h1>{{ order.total_price }} sum</h1></ol>
+                <a class="button is-danger" href="{% url 'delivery:is_success' order.pk %}">
+                            Готово
+                        </a>
+                </ul>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="column has-text-centered">
+            <div class="title is-2 has-text-centered">
+                Завершено
+            </div>
+            {% for order in orders %}
+
+                {% if order.readiness == True %}
+                    <ul>
+                        <ol>{{ order }}</ol>
+                        <ul>
+                            {% for order_food in order.order_foods.all %}
+                                <a href="{% url 'delivery:detail_food' order_food.food.pk %}">
+                                    {{ order_food }}
+                                </a>
+                            {% endfor %}
+                        </ul>
+                        <ol><h1>{{ order.total_price }} sum</h1></ol>
+
+
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+        </div>
+    {% endblock %}
